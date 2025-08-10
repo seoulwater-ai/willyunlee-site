@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Will Yun Lee | Actor</title>
+  <meta name="description" content="Official site of actor Will Yun Lee. Action-trained, emotionally grounded performances in The Good Doctor, Altered Carbon, The Wolverine.">
+  <link rel="icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header" role="navigation">
+    <a class="brand" href="#home" aria-label="Homepage">Will Yun Lee</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#film-tv">Film &amp; TV</a>
+      <a href="#press">Press</a>
+      <a href="#about">About</a>
+      <a class="cta" href="#contact">Contact</a>
+    </nav>
+    <button class="menu-toggle" aria-label="Open Menu" aria-expanded="false">☰</button>
+  </header>
+
+  <main id="home">
+    <section class="hero" role="banner" aria-label="Hero">
+      <div class="hero-content">
+        <h1 id="hero-headline">WILL YUN LEE</h1>
+        <p id="hero-tagline" class="tagline">Grounded. Intense. Human.</p>
+        <div class="hero-ctas">
+          <a class="btn primary" href="#reel">Watch Reel</a>
+          <a class="btn" href="#contact">Contact</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="reel" class="reel" aria-label="Reel">
+      <div class="container">
+        <div class="video-wrap">
+          <iframe id="reel-embed" src="" title="Will Yun Lee Reel"
+                  frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <p id="reel-caption" class="reel-caption"></p>
+      </div>
+    </section>
+
+    <section id="film-tv" class="grid-section" aria-label="Film &amp; TV">
+      <div class="container">
+        <h2>Film &amp; TV</h2>
+        <ul id="credits-grid" class="card-grid"></ul>
+      </div>
+    </section>
+
+    <section id="press" class="press" aria-label="Press">
+      <div class="container">
+        <h2>Press</h2>
+        <ul id="quotes-list" class="quote-list"></ul>
+        <p class="press-note">Links go to original articles. Quotes used verbatim.</p>
+      </div>
+    </section>
+
+    <section id="about" class="about" aria-label="About">
+      <div class="container narrow">
+        <h2>About</h2>
+        <p id="about-text"></p>
+      </div>
+    </section>
+
+    <section id="contact" class="contact" aria-label="Contact">
+      <div class="container narrow">
+        <h2>Contact</h2>
+        <ul class="contacts">
+          <li><strong>Agent:</strong> <a id="agent-email" href="#">agent@example.com</a></li>
+          <li><strong>Manager:</strong> <a id="manager-email" href="#">manager@example.com</a></li>
+          <li><strong>IMDb:</strong> <a id="imdb-url" href="https://www.imdb.com/name/nm0497635/" target="_blank" rel="noopener">Profile</a></li>
+          <li><strong>Instagram:</strong> <a id="instagram-url" href="https://www.instagram.com/willyunlee/" target="_blank" rel="noopener">@willyunlee</a></li>
+        </ul>
+
+        <form class="newsletter" action="#" method="post" onsubmit="alert('Thanks!'); return false;">
+          <label for="email">For news and updates sign up with your email address below.</label>
+          <div class="row">
+            <input id="email" type="email" placeholder="Email Address" required>
+            <button class="btn primary" type="submit">Submit</button>
+          </div>
+          <p class="form-note">Demo form. Connect your provider to collect submissions.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 Will Yun Lee. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      document.body.classList.toggle('nav-open');
+    });
+
+    async function loadJSON(path){ const r = await fetch(path); return r.json(); }
+    (async () => {
+      try {
+        const hero = await loadJSON('content/hero.json');
+        const reel = await loadJSON('content/reel.json');
+        const credits = await loadJSON('content/credits.json');
+        const quotes = await loadJSON('content/quotes.json');
+        const about = await loadJSON('content/about.json');
+        const contact = await loadJSON('content/contact.json');
+
+        document.getElementById('hero-headline').textContent = hero.headline || 'WILL YUN LEE';
+        document.getElementById('hero-tagline').textContent = hero.tagline || 'Grounded. Intense. Human.';
+        document.querySelector('.hero').style.backgroundImage =
+          `linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.75)),url('${hero.hero_image || 'assets/hero-placeholder.jpg'}')`;
+
+        document.getElementById('reel-embed').src = reel.embed_url || '';
+        document.getElementById('reel-caption').textContent = reel.caption || '';
+
+        const grid = document.getElementById('credits-grid');
+        credits.forEach(c => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = c.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = c.title;
+          li.appendChild(a); grid.appendChild(li);
+        });
+
+        const ul = document.getElementById('quotes-list');
+        quotes.forEach(q => {
+          const li = document.createElement('li');
+          const bq = document.createElement('blockquote');
+          const p = document.createElement('p'); p.textContent = `“${q.text.replace(/^“|”$/g,'')}”`;
+          const footer = document.createElement('footer');
+          const a = document.createElement('a'); a.href = q.source_url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = q.source_name;
+          footer.appendChild(document.createTextNode('— ')); footer.appendChild(a);
+          if(q.context){ const em = document.createElement('em'); em.textContent = ' ' + q.context; footer.appendChild(document.createTextNode(' ')); footer.appendChild(em); }
+          bq.appendChild(p); bq.appendChild(footer); li.appendChild(bq); ul.appendChild(li);
+        });
+
+        document.getElementById('about-text').textContent = about.text || '';
+
+        const agent = document.getElementById('agent-email');
+        const manager = document.getElementById('manager-email');
+        const imdb = document.getElementById('imdb-url');
+        const ig = document.getElementById('instagram-url');
+        if(contact.agent_email){ agent.href = 'mailto:' + contact.agent_email; agent.textContent = contact.agent_email; }
+        if(contact.manager_email){ manager.href = 'mailto:' + contact.manager_email; manager.textContent = contact.manager_email; }
+        if(contact.imdb_url){ imdb.href = contact.imdb_url; }
+        if(contact.instagram_url){ ig.href = contact.instagram_url; ig.textContent = '@' + (new URL(contact.instagram_url).pathname.replaceAll('/','')); }
+      } catch (e) {
+        console.error('Content load error', e);
+      }
+    })();
+  </script>
+</body>
+</html>

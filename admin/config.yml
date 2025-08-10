@@ -1,0 +1,81 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets"
+public_folder: "/assets"
+
+collections:
+  - name: "hero"
+    label: "Hero"
+    files:
+      - file: "content/hero.json"
+        label: "Hero Content"
+        name: "hero"
+        format: "json"
+        fields:
+          - {label: "Headline", name: "headline", widget: "string"}
+          - {label: "Tagline", name: "tagline", widget: "string"}
+          - {label: "Hero Image", name: "hero_image", widget: "image"}
+
+  - name: "reel"
+    label: "Reel"
+    files:
+      - file: "content/reel.json"
+        label: "Reel Embed"
+        name: "reel"
+        format: "json"
+        fields:
+          - {label: "Embed URL", name: "embed_url", widget: "string"}
+          - {label: "Caption", name: "caption", widget: "string"}
+
+  - name: "credits"
+    label: "Film & TV Credits"
+    files:
+      - file: "content/credits.json"
+        label: "Credits List"
+        name: "credits"
+        format: "json"
+        fields:
+          - {label: "Items", name: "items", widget: "list", fields: [
+            {label: "Title", name: "title", widget: "string"},
+            {label: "URL", name: "url", widget: "string"}
+          ]}
+
+  - name: "quotes"
+    label: "Press Quotes"
+    files:
+      - file: "content/quotes.json"
+        label: "Quotes"
+        name: "quotes"
+        format: "json"
+        fields:
+          - {label: "Items", name: "items", widget: "list", fields: [
+            {label: "Text", name: "text", widget: "text"},
+            {label: "Source Name", name: "source_name", widget: "string"},
+            {label: "Source URL", name: "source_url", widget: "string"},
+            {label: "Context (optional)", name: "context", widget: "string", required: false}
+          ]}
+
+  - name: "about"
+    label: "About"
+    files:
+      - file: "content/about.json"
+        label: "About Text"
+        name: "about"
+        format: "json"
+        fields:
+          - {label: "Text", name: "text", widget: "text"}
+
+  - name: "contact"
+    label: "Contact"
+    files:
+      - file: "content/contact.json"
+        label: "Contact Info"
+        name: "contact"
+        format: "json"
+        fields:
+          - {label: "Agent Email", name: "agent_email", widget: "string"}
+          - {label: "Manager Email", name: "manager_email", widget: "string"}
+          - {label: "IMDb URL", name: "imdb_url", widget: "string"}
+          - {label: "Instagram URL", name: "instagram_url", widget: "string"}
